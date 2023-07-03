@@ -30,5 +30,20 @@ module Spree
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.active_record.yaml_column_permitted_classes = [Symbol, BigDecimal]
+
+    config.time_zone = 'Central Time (US & Canada)'
+        # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.default_locale = :en
+
+    # use Sidekiq for ActiveJob
+    config.active_job.queue_adapter = :sidekiq
+
+    # adds support for Services
+    config.autoload_paths += %W(#{config.root}/services #{config.root}/app/services/concerns)
+
+
+
   end
 end
