@@ -38,7 +38,7 @@ module Spree
     config.i18n.default_locale = :en
 
     # use Sidekiq for ActiveJob
-    config.active_job.queue_adapter = :sidekiq
+    # config.active_job.queue_adapter = :sidekiq
 
     # adds support for Services
     config.autoload_paths += %W(#{config.root}/services #{config.root}/app/services/concerns)
