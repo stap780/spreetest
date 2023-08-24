@@ -2,7 +2,7 @@
 lock "~> 3.17.3"
 
 
-server '134.122.0.233', port: 22, roles: [:web, :app, :db], primary: true
+server '134.122.65.9', port: 22, roles: [:web, :app, :db], primary: true
 set :branch, 'main'
 set :application, "spree"
 set :repo_url, "git@github.com:stap780/spreetest.git"
@@ -16,7 +16,6 @@ set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache
 set :deploy_to,       "/var/www/#{fetch(:application)}"
-#set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
