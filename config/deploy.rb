@@ -4,7 +4,7 @@ lock "~> 3.17.3"
 
 server '134.122.65.9', port: 22, roles: [:web, :app, :db], primary: true
 set :branch, 'main'
-set :application, "spree"
+set :application, "spreetest"
 set :repo_url, "git@github.com:stap780/spreetest.git"
 
 set :user, 'deploy'
