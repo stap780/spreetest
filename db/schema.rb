@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_111197) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_07_093917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -679,6 +679,36 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_111197) do
     t.index ["variant_id"], name: "index_spree_prices_on_variant_id"
   end
 
+  create_table "spree_product_import_columns", force: :cascade do |t|
+    t.integer "product_import_id"
+    t.string "column_file"
+    t.string "column_system"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "spree_product_imports", force: :cascade do |t|
+    t.boolean "active", default: true
+    t.string "title"
+    t.string "report"
+    t.string "file"
+    t.string "strategy"
+    t.string "uniq_field"
+    t.boolean "update_title", default: true
+    t.boolean "update_desc", default: true
+    t.boolean "update_img", default: true
+    t.boolean "update_quantity", default: true
+    t.boolean "update_price", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active"], name: "index_spree_product_imports_on_active"
+    t.index ["update_desc"], name: "index_spree_product_imports_on_update_desc"
+    t.index ["update_img"], name: "index_spree_product_imports_on_update_img"
+    t.index ["update_price"], name: "index_spree_product_imports_on_update_price"
+    t.index ["update_quantity"], name: "index_spree_product_imports_on_update_quantity"
+    t.index ["update_title"], name: "index_spree_product_imports_on_update_title"
+  end
+
   create_table "spree_product_option_types", force: :cascade do |t|
     t.integer "position"
     t.bigint "product_id"
@@ -763,6 +793,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_111197) do
     t.jsonb "private_metadata"
     t.string "status", default: "draft", null: false
     t.datetime "make_active_at", precision: nil
+    t.string "unique_identifier"
+    t.string "unique_identifier_type", default: "gtin"
+    t.boolean "feed_active", default: false
     t.index ["available_on"], name: "index_spree_products_on_available_on"
     t.index ["deleted_at"], name: "index_spree_products_on_deleted_at"
     t.index ["discontinue_on"], name: "index_spree_products_on_discontinue_on"
@@ -1461,7 +1494,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_111197) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "engine", default: 0, null: false
+    t.integer "store_id"
     t.index ["active"], name: "index_spree_trackers_on_active"
+    t.index ["store_id"], name: "index_spree_trackers_on_store_id"
   end
 
   create_table "spree_users", force: :cascade do |t|
@@ -1526,6 +1561,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_111197) do
     t.jsonb "public_metadata"
     t.jsonb "private_metadata"
     t.string "barcode"
+    t.string "unique_identifier"
+    t.string "unique_identifier_type", default: "gtin"
+    t.boolean "show_in_product_feed", default: true
     t.index ["barcode"], name: "index_spree_variants_on_barcode"
     t.index ["deleted_at"], name: "index_spree_variants_on_deleted_at"
     t.index ["discontinue_on"], name: "index_spree_variants_on_discontinue_on"
